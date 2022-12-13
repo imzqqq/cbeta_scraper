@@ -1,4 +1,5 @@
 import os
+import logging
 import datetime
 import argparse
 from time import sleep
@@ -7,6 +8,8 @@ import pandas as pd
 from selenium.webdriver.support.ui import WebDriverWait
 
 from .utils import init_driver, log_search_page, keep_scrolling
+
+logger = logging.getLogger(__name__)
 
 
 def scrape(
@@ -28,6 +31,8 @@ def scrape(
     driver = init_driver(headless)
 
     driver.get("https://cbetaonline.cn/zh/")
+    sleep(random.uniform(3 - 0.5, 3 + 0.5))
+    logger.info()
 
     # Resume scraping from previous work
     if resume:
