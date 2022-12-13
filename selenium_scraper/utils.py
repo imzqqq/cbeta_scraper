@@ -41,7 +41,7 @@ def init_driver(
 
     if proxy is not None:
         options.add_argument('--proxy-server=%s' % proxy)
-        print("using proxy : ", proxy)
+        logger.info("Using proxy : ", proxy)
 
     if show_images is False and firefox is False:
         prefs = {"profile.managed_default_content_settings.images": 2}

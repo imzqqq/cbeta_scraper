@@ -1,5 +1,7 @@
 {
 	"cSpell.words": [
 		"CBETA"
-	]
+	],
+	"python.linting.flake8Enabled": true,
+	"indentRainbow.indicatorStyle": "light"
 }

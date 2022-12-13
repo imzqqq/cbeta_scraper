@@ -4,6 +4,7 @@ import argparse
 from time import sleep
 import random
 import pandas as pd
+from selenium.webdriver.support.ui import WebDriverWait
 
 from .utils import init_driver, log_search_page, keep_scrolling
 
@@ -25,6 +26,8 @@ def scrape(
 
     # Initiate the driver
     driver = init_driver(headless)
+
+    driver.get("https://cbetaonline.cn/zh/")
 
     # Resume scraping from previous work
     if resume:
