@@ -164,7 +164,7 @@ def scrape(
                                                     dwait.until(EC.number_of_windows_to_be(2))
                                                     download(driver, original_window)
 
-                                                if l4_idx == 0:
+                                                if l4_idx == len(l4_bulei_list_of_btns) - 1:
                                                     logger.info("l4 finished, pop up to parent level...\n")
 
                                                     if need_reopen_sidebar:
