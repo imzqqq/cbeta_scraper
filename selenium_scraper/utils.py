@@ -111,6 +111,7 @@ def close_notification_dialog(driver):
 
 
 def pop_up2_parent_level(driver):
+    sleep(random.uniform(3 - 0.5, 3 + 0.5))
     pop_up_btn = WebDriverWait(driver=driver, timeout=5).until(
         lambda x: x.find_element(
             by=By.ID,
@@ -118,6 +119,7 @@ def pop_up2_parent_level(driver):
         )
     )
     pop_up_btn.click()
+    sleep(random.uniform(3 - 0.5, 3 + 0.5))
 
 
 def get_bulei_list_of_btns(driver):
@@ -183,7 +185,7 @@ def download(driver, original_window):
         by=By.ID,
         value='jing_export_btn'
     ).click()
-    sleep(random.uniform(10 + 1.5, 10 + 2.5))
+    sleep(random.uniform(0.5, 0.6))
     driver.close()
     driver.switch_to.window(original_window)
 
