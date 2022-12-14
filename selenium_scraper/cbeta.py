@@ -160,8 +160,13 @@ def scrape(
                                     dwait.until(EC.number_of_windows_to_be(2))
                                     download(driver, original_window)
 
-                                if l4_idx == len(l4_bulei_list_of_btns) - 1:
+                                if l4_idx == 0:
                                     logger.info("l4 finished, pop up to parent level...\n")
+
+                                    if need_reopen_sidebar:
+                                        open_sidebar(driver)
+                                        need_reopen_sidebar = False
+
                                     pop_up2_parent_level(driver)
                         else:
                             logger.info("Going to a new page to download...")
@@ -173,6 +178,11 @@ def scrape(
 
                         if l3_idx == len(l3_bulei_list_of_btns) - 1:
                             logger.info("l3 finished, pop up to parent level...\n")
+
+                            if need_reopen_sidebar:
+                                open_sidebar(driver)
+                                need_reopen_sidebar = False
+
                             pop_up2_parent_level(driver)
                 else:
                     logger.info("Going to a new page to download...")
@@ -184,6 +194,11 @@ def scrape(
 
                 if l2_idx == len(l2_bulei_list_of_btns) - 1:
                     logger.info("l2 finished, pop up to parent level...\n")
+
+                    if need_reopen_sidebar:
+                        open_sidebar(driver)
+                        need_reopen_sidebar = False
+
                     pop_up2_parent_level(driver)
 
     except Exception as e:

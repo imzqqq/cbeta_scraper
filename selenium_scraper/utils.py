@@ -111,6 +111,7 @@ def close_notification_dialog(driver):
 
 
 def pop_up2_parent_level(driver):
+    logger.info("--------------1\n")
     sleep(random.uniform(3 - 0.5, 3 + 0.5))
     pop_up_btn = WebDriverWait(driver=driver, timeout=5).until(
         lambda x: x.find_element(
@@ -119,6 +120,7 @@ def pop_up2_parent_level(driver):
         )
     )
     pop_up_btn.click()
+    logger.info("Popped up to parent level\n")
     sleep(random.uniform(3 - 0.5, 3 + 0.5))
 
 
