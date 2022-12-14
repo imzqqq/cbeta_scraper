@@ -1,4 +1,9 @@
+import os
+import yaml
 import logging
+import logging.config
+from time import sleep
+import random
 import chromedriver_autoinstaller
 import geckodriver_autoinstaller
 from selenium.common.exceptions import NoSuchElementException
@@ -12,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 def init_driver(
-    headless: bool = True, proxy=None, show_images=False, option=None, firefox=False
+    *, headless: bool = True, proxy=None, show_images=False, option=None, firefox=False
 ):
     """ Initiate a chromedriver or firefoxdriver instance
         --option : other option to add (str)
@@ -102,3 +107,66 @@ def close_notification_dialog(driver):
         ).click()
     except Exception:
         logger.info("No need to close notification settings dialog")
+
+
+def pop_up2_parent_level(driver):
+    pop_up_btn = WebDriverWait(driver=driver, timeout=5).until(
+        lambda x: x.find_element(
+            by=By.ID,
+            value='selector-levels-back-btn'
+        )
+    )
+    pop_up_btn.click()
+
+
+def get_bulei_list_of_btns(driver):
+    l_card_by_bulei = WebDriverWait(driver=driver, timeout=5).until(
+        lambda x: x.find_element(
+            by=By.ID,
+            value='selector-levels'
+        )
+    )
+    sleep(random.uniform(3 - 1.5, 3))
+    l_bulei_list_of_btns = WebDriverWait(driver=l_card_by_bulei, timeout=5).until(
+        lambda x: x.find_elements(
+            by=By.TAG_NAME,
+            value='button'
+        )
+    )
+    sleep(random.uniform(3 - 1.5, 3 + 0.5))
+    return l_bulei_list_of_btns
+
+
+def reattach_to_l1(driver):
+    l1_card_by_bulei = WebDriverWait(driver=driver, timeout=5).until(
+        lambda x: x.find_element(
+            by=By.ID,
+            value='selector-levels'
+        )
+    )
+    # logger.info(card_by_bulei.get_attribute('innerHTML'))
+    l1_bulei_list_of_btns = WebDriverWait(driver=l1_card_by_bulei, timeout=5).until(
+        lambda x: x.find_elements(
+            by=By.TAG_NAME,
+            value='button'
+        )
+    )
+    return l1_bulei_list_of_btns
+
+
+def setup_logging(
+    config_path: str = 'logging.yml',
+    default_level=logging.INFO
+) -> None:
+    if os.path.exists(config_path):
+        with open(config_path, 'r', encoding='utf-8') as f:
+            logging.info("Successfully loaded logging.yml configurations")
+            log_config = yaml.safe_load(f)
+    else:
+        log_config = False
+        logging.basicConfig(level=default_level)
+
+    if not log_config:
+        logging.warning("Loaded a blank logging config?")
+
+    logging.config.dictConfig(log_config)
