@@ -42,7 +42,7 @@ def scrape(
     # logger.info(driver.page_source)
 
     # Setup wait for later
-    wait = WebDriverWait(driver, 10)
+    dwait = WebDriverWait(driver, 10)
 
     try:
         open_sidebar(driver)
@@ -157,7 +157,7 @@ def scrape(
                                     need_reopen_sidebar = True
                                     l4_btn.click()
 
-                                    wait.until(EC.number_of_windows_to_be(2))
+                                    dwait.until(EC.number_of_windows_to_be(2))
                                     download(driver, original_window)
 
                                 if l4_idx == len(l4_bulei_list_of_btns) - 1:
@@ -168,7 +168,7 @@ def scrape(
                             need_reopen_sidebar = True
                             l3_btn.click()
 
-                            wait.until(EC.number_of_windows_to_be(2))
+                            dwait.until(EC.number_of_windows_to_be(2))
                             download(driver, original_window)
 
                         if l3_idx == len(l3_bulei_list_of_btns) - 1:
@@ -179,7 +179,7 @@ def scrape(
                     need_reopen_sidebar = True
                     l2_btn.click()
 
-                    wait.until(EC.number_of_windows_to_be(2))
+                    dwait.until(EC.number_of_windows_to_be(2))
                     download(driver, original_window)
 
                 if l2_idx == len(l2_bulei_list_of_btns) - 1:
