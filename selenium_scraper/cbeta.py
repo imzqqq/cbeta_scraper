@@ -150,7 +150,7 @@ def scrape(
                                 )
                                 sleep(random.uniform(wait - 2.5, wait))
                                 l4_btn_type = l4_span.get_attribute("class")
-                                logger.info(f"l3_btn_type: {l3_btn_type}")
+                                logger.info(f"l4_btn_type: {l4_btn_type}")
 
                                 if "file" in str(l4_btn_type):
                                     logger.info("Going to a new page to download...")
