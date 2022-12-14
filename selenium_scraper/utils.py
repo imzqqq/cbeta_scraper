@@ -12,6 +12,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 logger = logging.getLogger(__name__)
 
@@ -120,14 +121,14 @@ def pop_up2_parent_level(driver):
 
 
 def get_bulei_list_of_btns(driver):
-    l_card_by_bulei = WebDriverWait(driver=driver, timeout=5).until(
+    l_card_by_bulei = WebDriverWait(driver=driver, timeout=10).until(
         lambda x: x.find_element(
             by=By.ID,
             value='selector-levels'
         )
     )
     sleep(random.uniform(3 - 1.5, 3))
-    l_bulei_list_of_btns = WebDriverWait(driver=l_card_by_bulei, timeout=5).until(
+    l_bulei_list_of_btns = WebDriverWait(driver=l_card_by_bulei, timeout=10).until(
         lambda x: x.find_elements(
             by=By.TAG_NAME,
             value='button'
@@ -137,21 +138,64 @@ def get_bulei_list_of_btns(driver):
     return l_bulei_list_of_btns
 
 
-def reattach_to_l1(driver):
-    l1_card_by_bulei = WebDriverWait(driver=driver, timeout=5).until(
+def reattach_gblb(driver):
+    l_card_by_bulei = WebDriverWait(driver=driver, timeout=20).until(
         lambda x: x.find_element(
             by=By.ID,
             value='selector-levels'
         )
     )
+    sleep(random.uniform(3 + 1.5, 3 + 2.5))
     # logger.info(card_by_bulei.get_attribute('innerHTML'))
-    l1_bulei_list_of_btns = WebDriverWait(driver=l1_card_by_bulei, timeout=5).until(
+    l_bulei_list_of_btns = WebDriverWait(driver=l_card_by_bulei, timeout=20).until(
         lambda x: x.find_elements(
             by=By.TAG_NAME,
             value='button'
         )
     )
-    return l1_bulei_list_of_btns
+    return l_bulei_list_of_btns
+
+
+def download(driver, original_window):
+    # Loop through until we find a new window handle
+    for window_handle in driver.window_handles:
+        if window_handle != original_window:
+            driver.switch_to.window(window_handle)
+
+    sleep(random.uniform(3 + 1.5, 3 + 2.5))
+    download_btn = driver.find_element(
+        by=By.ID,
+        value='jing_export_modal_btn'
+    )
+    # print(download_btn)
+    download_btn.click()
+    sleep(random.uniform(3 + 1.5, 3 + 2.5))
+
+    driver.find_element(
+        by=By.XPATH,
+        value='//input[@value="txt"]'
+    ).click()
+    driver.find_element(
+        by=By.XPATH,
+        value='//input[@value="all"]'
+    ).click()
+    driver.find_element(
+        by=By.ID,
+        value='jing_export_btn'
+    ).click()
+    sleep(random.uniform(10 + 1.5, 10 + 2.5))
+    driver.close()
+    driver.switch_to.window(original_window)
+
+
+def open_sidebar(driver):
+    btn_choose_scripture = WebDriverWait(driver=driver, timeout=5).until(
+        lambda x: x.find_element(
+            by=By.XPATH,
+            value='//img[contains(@id, "open_jing_selector_btn")]'
+        )
+    )
+    btn_choose_scripture.click()
 
 
 def setup_logging(
