@@ -33,7 +33,7 @@ def scrape(
         os.makedirs(save_dir)
 
     # Initiate the driver
-    driver = init_driver(headless, show_images=True)
+    driver = init_driver(headless=headless, show_images=True)
 
     driver.get("https://cbetaonline.cn/zh/")
     # Store the ID of the original window
