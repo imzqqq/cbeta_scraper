@@ -101,8 +101,8 @@ def scrape(
                 #   elif end -> pop up to parent level
                 for l2_idx, l2_btn in enumerate(l2_bulei_list_of_btns):
                     if idx_dict:
-                        if l2_idx < idx_dict["l2"]:
-                            logger.info(f"l2 at {l2_idx} was scraped, skipping...")
+                        if l1_idx < idx_dict["l1"] and l2_idx < idx_dict["l2"]:
+                            logger.info(f"l2 at <{l1_idx}, {l2_idx}> was scraped, skipping...")
                             continue
 
                     try:
@@ -137,8 +137,8 @@ def scrape(
 
                             for l3_idx, l3_btn in enumerate(l3_bulei_list_of_btns):
                                 if idx_dict:
-                                    if l3_idx < idx_dict["l3"]:
-                                        logger.info(f"l3 at {l3_idx} was scraped, skipping...")
+                                    if l1_idx < idx_dict["l1"] and l2_idx < idx_dict["l2"] and l3_idx < idx_dict["l3"]:
+                                        logger.info(f"l3 at <{l1_idx}, {l2_idx}, {l3_idx}> was scraped, skipping...")
                                         continue
 
                                 try:
@@ -173,8 +173,8 @@ def scrape(
 
                                         for l4_idx, l4_btn in enumerate(l4_bulei_list_of_btns):
                                             if idx_dict:
-                                                if l4_idx < idx_dict["l4"]:
-                                                    logger.info(f"l4 at {l4_idx} was scraped, skipping...")
+                                                if l1_idx < idx_dict["l1"] and l2_idx < idx_dict["l2"] and l3_idx < idx_dict["l3"] and l4_idx < idx_dict["l4"]:
+                                                    logger.info(f"l4 at <{l1_idx}, {l2_idx}, {l3_idx}, {l4_idx}> was scraped, skipping...")
                                                     continue
 
                                             try:
