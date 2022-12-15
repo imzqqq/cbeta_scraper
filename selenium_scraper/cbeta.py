@@ -164,8 +164,8 @@ def scrape(
                                                     dwait.until(EC.number_of_windows_to_be(2))
                                                     download(driver, original_window)
 
-                                                # if l4_idx == len(l4_bulei_list_of_btns) - 1:
-                                                if l4_idx == 1:
+                                                # if l4_idx == 1:
+                                                if l4_idx == len(l4_bulei_list_of_btns) - 1:
                                                     logger.info("l4 finished, pop up to parent level...\n")
 
                                                     if need_reopen_sidebar:
@@ -185,8 +185,8 @@ def scrape(
                                         dwait.until(EC.number_of_windows_to_be(2))
                                         download(driver, original_window)
 
-                                    # if l3_idx == len(l3_bulei_list_of_btns) - 1:
-                                    if l3_idx == 1:
+                                    # if l3_idx == 1:
+                                    if l3_idx == len(l3_bulei_list_of_btns) - 1:
                                         logger.info("l3 finished, pop up to parent level...\n")
 
                                         if need_reopen_sidebar:
@@ -206,8 +206,8 @@ def scrape(
                             dwait.until(EC.number_of_windows_to_be(2))
                             download(driver, original_window)
 
-                        # if l2_idx == len(l2_bulei_list_of_btns) - 1:
-                        if l2_idx == 1:
+                        # if l2_idx == 1:
+                        if l2_idx == len(l2_bulei_list_of_btns) - 1:
                             logger.info("l2 finished, pop up to parent level...\n")
 
                             if need_reopen_sidebar:
