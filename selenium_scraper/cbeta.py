@@ -34,7 +34,7 @@ def scrape(
         df = pd.read_csv(save_dir)
 
         if not df.empty:
-            idx_dict = df.to_dict('records')
+            idx_dict = df.to_dict('records')[0]
 
             if not (
                 "l1" in df.columns and "l2" in df.columns and
