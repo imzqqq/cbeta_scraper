@@ -5,6 +5,7 @@ import argparse
 from time import sleep
 import random
 import pandas as pd
+from typing import Dict
 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -18,7 +19,10 @@ logger = logging.getLogger(__name__)
 
 
 def scrape(
-    wait: int = 3, headless: bool = False, resume: bool = True, save_dir: str = "outputs"
+    wait: int = 3,
+    headless: bool = False,
+    resume: bool = True,
+    save_dir: str = "last_checkpoint.csv"
 ):
     """
     Scrape data from CBETA using requests
@@ -26,11 +30,15 @@ def scrape(
     return:
     """
 
-    write_mode = 'w'
+    if os.path.exists(save_dir):
+        df = pd.read_csv(save_dir)
 
-    # Create the <save_dir>
-    if not os.path.exists(save_dir):
-        os.makedirs(save_dir)
+        if not df.empty:
+            idx_dict = df.to_dict('records')
+    else:
+        idx_dict: Dict[str, int] = {}
+
+    current_idx_dict: Dict[str, int] = {}
 
     # Initiate the driver
     driver = init_driver(headless=headless, show_images=True)
@@ -56,6 +64,10 @@ def scrape(
         need_reopen_sidebar: bool = False
 
         for l1_idx, l1_btn in enumerate(l1_bulei_list_of_btns):
+            if idx_dict:
+                if l1_idx < idx_dict["l1"]:
+                    break
+
             try:
                 logger.info(f"Now at l1, idx: {l1_idx}")
 
@@ -75,6 +87,10 @@ def scrape(
                 #   if not end -> next one
                 #   elif end -> pop up to parent level
                 for l2_idx, l2_btn in enumerate(l2_bulei_list_of_btns):
+                    if idx_dict:
+                        if l2_idx < idx_dict["l2"]:
+                            break
+
                     try:
                         logger.info(f"Now at l2, idx: {l2_idx}")
 
@@ -105,6 +121,10 @@ def scrape(
                             l3_bulei_list_of_btns = get_bulei_list_of_btns(driver)
 
                             for l3_idx, l3_btn in enumerate(l3_bulei_list_of_btns):
+                                if idx_dict:
+                                    if l3_idx < idx_dict["l3"]:
+                                        break
+
                                 try:
                                     logger.info(f"Now at l3, idx: {l3_idx}")
 
@@ -135,6 +155,10 @@ def scrape(
                                         l4_bulei_list_of_btns = get_bulei_list_of_btns(driver)
 
                                         for l4_idx, l4_btn in enumerate(l4_bulei_list_of_btns):
+                                            if idx_dict:
+                                                if l4_idx < idx_dict["l4"]:
+                                                    break
+
                                             try:
                                                 logger.info(f"Now at l4, idx: {l4_idx}")
 
@@ -163,6 +187,9 @@ def scrape(
 
                                                     dwait.until(EC.number_of_windows_to_be(2))
                                                     download(driver, original_window)
+                                                    current_idx_dict["l4"] = l4_idx
+                                                    df4 = pd.DataFrame.from_dict(current_idx_dict)
+                                                    df4.to_csv(save_dir)
 
                                                 # if l4_idx == 1:
                                                 if l4_idx == len(l4_bulei_list_of_btns) - 1:
@@ -184,6 +211,9 @@ def scrape(
 
                                         dwait.until(EC.number_of_windows_to_be(2))
                                         download(driver, original_window)
+                                        current_idx_dict["l3"] = l3_idx
+                                        df3 = pd.DataFrame.from_dict(current_idx_dict)
+                                        df3.to_csv(save_dir)
 
                                     # if l3_idx == 1:
                                     if l3_idx == len(l3_bulei_list_of_btns) - 1:
@@ -205,6 +235,9 @@ def scrape(
 
                             dwait.until(EC.number_of_windows_to_be(2))
                             download(driver, original_window)
+                            current_idx_dict["l2"] = l2_idx
+                            df2 = pd.DataFrame.from_dict(current_idx_dict)
+                            df2.to_csv(save_dir)
 
                         # if l2_idx == 1:
                         if l2_idx == len(l2_bulei_list_of_btns) - 1:
@@ -219,15 +252,18 @@ def scrape(
                     except Exception as e:
                         logger.info(f"Exception at l2: {e}")
                         continue
+
+                current_idx_dict["l1"] = l1_idx
+                df1 = pd.DataFrame.from_dict(current_idx_dict)
+                df1.to_csv(save_dir)
             except Exception as e:
                 logger.info(f"Exception at l1: {e}")
                 continue
     except Exception as e:
         logger.info(f"Exception at l0: {e}")
 
-    # Resume scraping from previous work
-    if resume:
-        write_mode = 'a'  # noqa
+    current_df = pd.DataFrame.from_dict(current_idx_dict)
+    current_df.to_csv(save_dir)
 
     logger.info("Job finished!😄")
     sleep(random.uniform(wait - 0.5, wait + 0.5))
