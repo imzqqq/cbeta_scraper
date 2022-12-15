@@ -86,7 +86,7 @@ def check_exists_by_xpath(xpath, driver):
 
 def close_notification_dialog(driver):
     try:
-        WebDriverWait(driver=driver, timeout=100).until(
+        WebDriverWait(driver=driver, timeout=1000).until(
             lambda x: x.find_element(
                 By.XPATH,
                 '//div[contains(@data-testid, "app-bar-close")]'
@@ -96,7 +96,7 @@ def close_notification_dialog(driver):
         logger.info("No need to close notification settings dialog")
 
     try:
-        sheetDialog = WebDriverWait(driver=driver, timeout=100).until(
+        sheetDialog = WebDriverWait(driver=driver, timeout=1000).until(
             lambda x: x.find_element(
                 By.XPATH,
                 '//div[contains(@data-testid, "sheetDialog")]'
@@ -116,7 +116,7 @@ def pop_up2parent_level(driver):
     while not_popped:
         try:
             sleep(random.uniform(3 - 0.5, 3 + 0.5))
-            pop_up_btn = WebDriverWait(driver=driver, timeout=100).until(
+            pop_up_btn = WebDriverWait(driver=driver, timeout=1000).until(
                 lambda x: x.find_element(
                     by=By.ID,
                     value='selector-levels-back-btn'
@@ -132,14 +132,14 @@ def pop_up2parent_level(driver):
 
 
 def get_bulei_list_of_btns(driver):
-    l_card_by_bulei = WebDriverWait(driver=driver, timeout=100).until(
+    l_card_by_bulei = WebDriverWait(driver=driver, timeout=1000).until(
         lambda x: x.find_element(
             by=By.ID,
             value='selector-levels'
         )
     )
     sleep(random.uniform(3 - 1.5, 3))
-    l_bulei_list_of_btns = WebDriverWait(driver=l_card_by_bulei, timeout=100).until(
+    l_bulei_list_of_btns = WebDriverWait(driver=l_card_by_bulei, timeout=1000).until(
         lambda x: x.find_elements(
             by=By.TAG_NAME,
             value='button'
@@ -154,7 +154,7 @@ def reattach_gblb(driver):
 
     while not_attached:
         try:
-            l_card_by_bulei = WebDriverWait(driver=driver, timeout=100).until(
+            l_card_by_bulei = WebDriverWait(driver=driver, timeout=1000).until(
                 lambda x: x.find_element(
                     by=By.ID,
                     value='selector-levels'
@@ -162,7 +162,7 @@ def reattach_gblb(driver):
             )
             sleep(random.uniform(3 + 1.5, 3 + 2.5))
             # logger.info(card_by_bulei.get_attribute('innerHTML'))
-            l_bulei_list_of_btns = WebDriverWait(driver=l_card_by_bulei, timeout=100).until(
+            l_bulei_list_of_btns = WebDriverWait(driver=l_card_by_bulei, timeout=1000).until(
                 lambda x: x.find_elements(
                     by=By.TAG_NAME,
                     value='button'
@@ -183,7 +183,7 @@ def download(driver, original_window):
             driver.switch_to.window(window_handle)
 
     sleep(random.uniform(3 + 1.5, 3 + 2.5))
-    download_btn = WebDriverWait(driver=driver, timeout=100).until(
+    download_btn = WebDriverWait(driver=driver, timeout=1000).until(
         lambda x: x.find_element(
             by=By.ID,
             value='jing_export_modal_btn'
@@ -193,7 +193,7 @@ def download(driver, original_window):
     download_btn.click()
     sleep(random.uniform(3 + 1.5, 3 + 2.5))
 
-    option_txt = WebDriverWait(driver=driver, timeout=100).until(
+    option_txt = WebDriverWait(driver=driver, timeout=1000).until(
         lambda x: x.find_element(
             by=By.XPATH,
             value='//input[@value="txt"]'
@@ -201,7 +201,7 @@ def download(driver, original_window):
     )
     option_txt.click()
 
-    option_all = WebDriverWait(driver=driver, timeout=100).until(
+    option_all = WebDriverWait(driver=driver, timeout=1000).until(
         lambda x: x.find_element(
             by=By.XPATH,
             value='//input[@value="all"]'
@@ -209,7 +209,7 @@ def download(driver, original_window):
     )
     option_all.click()
 
-    btn_export = WebDriverWait(driver=driver, timeout=100).until(
+    btn_export = WebDriverWait(driver=driver, timeout=1000).until(
         lambda x: x.find_element(
             by=By.ID,
             value='jing_export_btn'
@@ -229,7 +229,7 @@ def open_sidebar(driver):
     while not_opened:
         try:
             sleep(random.uniform(3 - 1.5, 3 + 0.5))
-            btn_choose_scripture = WebDriverWait(driver=driver, timeout=100).until(
+            btn_choose_scripture = WebDriverWait(driver=driver, timeout=1000).until(
                 lambda x: x.find_element(
                     by=By.XPATH,
                     value='//img[contains(@id, "open_jing_selector_btn")]'
