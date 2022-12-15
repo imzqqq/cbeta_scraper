@@ -166,29 +166,44 @@ def download(driver, original_window):
             driver.switch_to.window(window_handle)
 
     sleep(random.uniform(3 + 1.5, 3 + 2.5))
-    download_btn = driver.find_element(
-        by=By.ID,
-        value='jing_export_modal_btn'
+    download_btn = WebDriverWait(driver=driver, timeout=5).until(
+        lambda x: x.find_element(
+            by=By.ID,
+            value='jing_export_modal_btn'
+        )
     )
-    # print(download_btn)
+    sleep(random.uniform(3 - 1.5, 3 + 0.5))
     download_btn.click()
     sleep(random.uniform(3 + 1.5, 3 + 2.5))
 
-    driver.find_element(
-        by=By.XPATH,
-        value='//input[@value="txt"]'
-    ).click()
-    driver.find_element(
-        by=By.XPATH,
-        value='//input[@value="all"]'
-    ).click()
-    driver.find_element(
-        by=By.ID,
-        value='jing_export_btn'
-    ).click()
+    option_txt = WebDriverWait(driver=driver, timeout=5).until(
+        lambda x: x.find_element(
+            by=By.XPATH,
+            value='//input[@value="txt"]'
+        )
+    )
+    option_txt.click()
+
+    option_all = WebDriverWait(driver=driver, timeout=5).until(
+        lambda x: x.find_element(
+            by=By.XPATH,
+            value='//input[@value="all"]'
+        )
+    )
+    option_all.click()
+
+    btn_export = WebDriverWait(driver=driver, timeout=5).until(
+        lambda x: x.find_element(
+            by=By.ID,
+            value='jing_export_btn'
+        )
+    )
+    btn_export.click()
+
     sleep(random.uniform(0.5, 0.6))
     driver.close()
     driver.switch_to.window(original_window)
+    sleep(random.uniform(0.5, 0.6))
 
 
 def open_sidebar(driver):
