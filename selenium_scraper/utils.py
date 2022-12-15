@@ -110,7 +110,7 @@ def close_notification_dialog(driver):
         logger.info("No need to close notification settings dialog")
 
 
-def pop_up2_parent_level(driver):
+def pop_up2parent_level(driver):
     sleep(random.uniform(3 - 0.5, 3 + 0.5))
     pop_up_btn = WebDriverWait(driver=driver, timeout=5).until(
         lambda x: x.find_element(
@@ -192,12 +192,14 @@ def download(driver, original_window):
 
 
 def open_sidebar(driver):
+    sleep(random.uniform(3 - 1.5, 3 + 0.5))
     btn_choose_scripture = WebDriverWait(driver=driver, timeout=5).until(
         lambda x: x.find_element(
             by=By.XPATH,
             value='//img[contains(@id, "open_jing_selector_btn")]'
         )
     )
+    sleep(random.uniform(3 - 1.5, 3 + 0.5))
     btn_choose_scripture.click()
 
 

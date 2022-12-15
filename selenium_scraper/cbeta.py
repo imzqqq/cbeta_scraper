@@ -11,7 +11,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-from .utils import init_driver, pop_up2_parent_level, reattach_gblb, get_bulei_list_of_btns, \
+from .utils import init_driver, pop_up2parent_level, reattach_gblb, get_bulei_list_of_btns, \
     open_sidebar, download
 
 logger = logging.getLogger(__name__)
@@ -164,15 +164,18 @@ def scrape(
                                                     dwait.until(EC.number_of_windows_to_be(2))
                                                     download(driver, original_window)
 
-                                                if l4_idx == len(l4_bulei_list_of_btns) - 1:
+                                                # if l4_idx == len(l4_bulei_list_of_btns) - 1:
+                                                if l4_idx == 1:
                                                     logger.info("l4 finished, pop up to parent level...\n")
 
                                                     if need_reopen_sidebar:
                                                         open_sidebar(driver)
                                                         need_reopen_sidebar = False
 
-                                                    pop_up2_parent_level(driver)
-                                            except Exception:
+                                                    pop_up2parent_level(driver)
+                                                    break
+                                            except Exception as e:
+                                                logger.info(f"Exception at l4: {e}")
                                                 continue
                                     else:
                                         logger.info("Going to a new page to download...")
@@ -182,15 +185,18 @@ def scrape(
                                         dwait.until(EC.number_of_windows_to_be(2))
                                         download(driver, original_window)
 
-                                    if l3_idx == len(l3_bulei_list_of_btns) - 1:
+                                    # if l3_idx == len(l3_bulei_list_of_btns) - 1:
+                                    if l3_idx == 1:
                                         logger.info("l3 finished, pop up to parent level...\n")
 
                                         if need_reopen_sidebar:
                                             open_sidebar(driver)
                                             need_reopen_sidebar = False
 
-                                        pop_up2_parent_level(driver)
-                                except Exception:
+                                        pop_up2parent_level(driver)
+                                        break
+                                except Exception as e:
+                                    logger.info(f"Exception at l3: {e}")
                                     continue
                         else:
                             logger.info("Going to a new page to download...")
@@ -200,25 +206,30 @@ def scrape(
                             dwait.until(EC.number_of_windows_to_be(2))
                             download(driver, original_window)
 
-                        if l2_idx == len(l2_bulei_list_of_btns) - 1:
+                        # if l2_idx == len(l2_bulei_list_of_btns) - 1:
+                        if l2_idx == 1:
                             logger.info("l2 finished, pop up to parent level...\n")
 
                             if need_reopen_sidebar:
                                 open_sidebar(driver)
                                 need_reopen_sidebar = False
 
-                            pop_up2_parent_level(driver)
-                    except Exception:
+                            pop_up2parent_level(driver)
+                            break
+                    except Exception as e:
+                        logger.info(f"Exception at l2: {e}")
                         continue
-            except Exception:
+            except Exception as e:
+                logger.info(f"Exception at l1: {e}")
                 continue
     except Exception as e:
-        logger.info(e)
+        logger.info(f"Exception at l0: {e}")
 
     # Resume scraping from previous work
     if resume:
         write_mode = 'a'  # noqa
 
+    logger.info("Job finished!😄")
     sleep(random.uniform(wait - 0.5, wait + 0.5))
     # Close the web driver
     driver.close()
