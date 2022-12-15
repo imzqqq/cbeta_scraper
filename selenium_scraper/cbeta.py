@@ -101,12 +101,13 @@ def scrape(
                 #   elif end -> pop up to parent level
                 for l2_idx, l2_btn in enumerate(l2_bulei_list_of_btns):
                     if idx_dict:
-                        if l1_idx < idx_dict["l1"] and l2_idx < idx_dict["l2"]:
-                            logger.info(f"l2 at <{l1_idx}, {l2_idx}> was scraped, skipping...")
-                            continue
+                        if l1_idx < idx_dict["l1"]:
+                            if l2_idx < idx_dict["l2"]:
+                                logger.info(f"l2 at <{l1_idx}, {l2_idx}> was scraped, skipping...")
+                                continue
 
                     try:
-                        logger.info(f"Now at l2, idx: {l2_idx}")
+                        logger.info(f"Now at l2, idx: <{l1_idx}, {l2_idx}>")
                         current_idx_dict["l2"] = l2_idx
 
                         if need_reopen_sidebar:
@@ -137,12 +138,14 @@ def scrape(
 
                             for l3_idx, l3_btn in enumerate(l3_bulei_list_of_btns):
                                 if idx_dict:
-                                    if l1_idx < idx_dict["l1"] and l2_idx < idx_dict["l2"] and l3_idx < idx_dict["l3"]:
-                                        logger.info(f"l3 at <{l1_idx}, {l2_idx}, {l3_idx}> was scraped, skipping...")
-                                        continue
+                                    if l1_idx < idx_dict["l1"]:
+                                        if l2_idx < idx_dict["l2"]:
+                                            if l3_idx < idx_dict["l3"]:
+                                                logger.info(f"l3 at <{l1_idx}, {l2_idx}, {l3_idx}> was scraped, skipping...")
+                                                continue
 
                                 try:
-                                    logger.info(f"Now at l3, idx: {l3_idx}")
+                                    logger.info(f"Now at l3, idx: <{l1_idx}, {l2_idx}, {l3_idx}>")
                                     current_idx_dict["l3"] = l3_idx
 
                                     if need_reopen_sidebar:
@@ -173,12 +176,15 @@ def scrape(
 
                                         for l4_idx, l4_btn in enumerate(l4_bulei_list_of_btns):
                                             if idx_dict:
-                                                if l1_idx < idx_dict["l1"] and l2_idx < idx_dict["l2"] and l3_idx < idx_dict["l3"] and l4_idx < idx_dict["l4"]:
-                                                    logger.info(f"l4 at <{l1_idx}, {l2_idx}, {l3_idx}, {l4_idx}> was scraped, skipping...")
-                                                    continue
+                                                if l1_idx < idx_dict["l1"]:
+                                                    if l2_idx < idx_dict["l2"]:
+                                                        if l3_idx < idx_dict["l3"]:
+                                                            if l4_idx < idx_dict["l4"]:
+                                                                logger.info(f"l4 at <{l1_idx}, {l2_idx}, {l3_idx}, {l4_idx}> was scraped, skipping...")
+                                                                continue
 
                                             try:
-                                                logger.info(f"Now at l4, idx: {l4_idx}")
+                                                logger.info(f"Now at l4, idx: <{l1_idx}, {l2_idx}, {l3_idx}, {l4_idx}>")
                                                 current_idx_dict["l4"] = l4_idx
 
                                                 if need_reopen_sidebar:
