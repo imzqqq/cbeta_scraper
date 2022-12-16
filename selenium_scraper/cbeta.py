@@ -82,7 +82,6 @@ def scrape(
 
             try:
                 logger.info(f"Now at l1, idx: {l1_idx}")
-                current_idx_dict["l1"] = l1_idx
 
                 # Reattach to l1 WebElement
                 sleep(random.uniform(wait + 1.5, wait + 2.5))
@@ -108,7 +107,6 @@ def scrape(
 
                     try:
                         logger.info(f"Now at l2, idx: <{l1_idx}, {l2_idx}>")
-                        current_idx_dict["l2"] = l2_idx
 
                         if need_reopen_sidebar:
                             open_sidebar(driver)
@@ -146,7 +144,6 @@ def scrape(
 
                                 try:
                                     logger.info(f"Now at l3, idx: <{l1_idx}, {l2_idx}, {l3_idx}>")
-                                    current_idx_dict["l3"] = l3_idx
 
                                     if need_reopen_sidebar:
                                         open_sidebar(driver)
@@ -213,6 +210,10 @@ def scrape(
                                                     dwait.until(EC.number_of_windows_to_be(2))
                                                     download(driver, original_window)
 
+                                                    current_idx_dict["l1"] = l1_idx
+                                                    current_idx_dict["l2"] = l2_idx
+                                                    current_idx_dict["l3"] = l3_idx
+                                                    current_idx_dict["l4"] = l4_idx
                                                     df4 = pd.DataFrame.from_dict([current_idx_dict])
                                                     df4.to_csv(save_dir, mode='w')
 
@@ -236,6 +237,9 @@ def scrape(
 
                                         dwait.until(EC.number_of_windows_to_be(2))
                                         download(driver, original_window)
+
+                                        current_idx_dict["l1"] = l1_idx
+                                        current_idx_dict["l2"] = l2_idx
                                         current_idx_dict["l3"] = l3_idx
                                         df3 = pd.DataFrame.from_dict([current_idx_dict])
                                         df3.to_csv(save_dir, mode='w')
@@ -260,6 +264,8 @@ def scrape(
 
                             dwait.until(EC.number_of_windows_to_be(2))
                             download(driver, original_window)
+
+                            current_idx_dict["l1"] = l1_idx
                             current_idx_dict["l2"] = l2_idx
                             df2 = pd.DataFrame.from_dict([current_idx_dict])
                             df2.to_csv(save_dir, mode='w')
@@ -277,18 +283,11 @@ def scrape(
                     except Exception as e:
                         logger.info(f"Exception at l2: {e}")
                         continue
-
-                current_idx_dict["l1"] = l1_idx
-                df1 = pd.DataFrame.from_dict([current_idx_dict])
-                df1.to_csv(save_dir, mode='w')
             except Exception as e:
                 logger.info(f"Exception at l1: {e}")
                 continue
     except Exception as e:
         logger.info(f"Exception at l0: {e}")
-
-    current_df = pd.DataFrame.from_dict([current_idx_dict])
-    current_df.to_csv(save_dir, mode='w')
 
     logger.info("Job finished!😄")
     sleep(random.uniform(wait - 0.5, wait + 0.5))
